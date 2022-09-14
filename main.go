@@ -6,5 +6,5 @@ import (
 
 func main() {
 	// router.Router()
-	trivy.MkdirDocker()
+	trivy.MkdirWrite()
 }
