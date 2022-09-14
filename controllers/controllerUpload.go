@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"trivy_v3/models"
@@ -104,9 +105,10 @@ func Delete(c *gin.Context) {
 	pathFile := input.Pathfile
 	pathJson := input.PathJson
 
-	os.Remove(pathFile + "/")
-	os.Remove(pathJson + "/")
-	db.Delete(&input)
+	os.RemoveAll(pathFile)
+	fmt.Print(pathFile)
+	os.RemoveAll(pathJson)
+	//db.Delete(&input)
 
 	c.JSON(http.StatusOK, gin.H{
 		"data": "Deleted",
