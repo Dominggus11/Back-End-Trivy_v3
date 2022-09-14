@@ -16,9 +16,6 @@ func Router() {
 	r.GET("/get/:id", controllers.Find)
 	r.PUT("/update/:id", controllers.Update)
 	r.DELETE("/delete/:id", controllers.Delete)
+	r.GET("/jsonfile/:id", controllers.GetJson)
 	r.Run()
 }
-
-// func getJson() {
-// 	c.String(http.StatusOK, string(fileContents))
-// }

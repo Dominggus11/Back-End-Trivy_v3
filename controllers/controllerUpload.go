@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"trivy_v3/models"
@@ -113,4 +114,21 @@ func Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"data": "Deleted",
 	})
+}
+
+func GetJson(c *gin.Context) {
+	db := models.DB
+	// Get model if exist
+	var input models.Dockerfiles
+	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	pathJson := input.PathJson + "/resultsImage.json"
+	file, _ := os.Open(pathJson)
+	defer file.Close()
+
+	fileContent, _ := io.ReadAll(file)
+
+	c.String(http.StatusOK, string(fileContent))
 }
