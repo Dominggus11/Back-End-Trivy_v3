@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"trivy_v3/models"
+	"trivy_v3/trivy"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +16,7 @@ func FindAll(c *gin.Context) {
 }
 
 func PostDockerfile(c *gin.Context) {
-	//db := c.MustGet("db").(*gorm.DB)
+	//db := models.DB
 	var input models.Dockerfiles
 	if err := c.ShouldBind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -23,11 +24,17 @@ func PostDockerfile(c *gin.Context) {
 		})
 		return
 	}
+	pathFile := trivy.MkdirUploadFile()
+	pathJson := trivy.MkdirUploadJson()
+	file, _ := c.FormFile("pathfile")
+	input.Pathfile = file.Filename
+	c.SaveUploadedFile(file, pathFile+"/"+file.Filename)
+	trivy.TrivyScan(pathJson, pathFile, input.Pathfile)
 
 	//create Dockerfile
 	dockerfile := models.Dockerfiles{
-		Pathfile: input.Pathfile,
-		PathJson: input.PathJson,
+		Pathfile: pathFile,
+		PathJson: pathJson,
 	}
 	models.DB.Create(&dockerfile)
 	c.JSON(http.StatusOK, gin.H{

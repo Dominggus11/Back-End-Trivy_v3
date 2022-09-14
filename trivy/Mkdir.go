@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func MkdirUploadFile() {
+func MkdirUploadFile() string {
 	folder := 1
 	pathFolder := "FileDocker/FileUpload/"
 	for i := 1; i < 10; i++ {
@@ -22,6 +22,7 @@ func MkdirUploadFile() {
 			break
 		}
 	}
+	return pathFolder + strconv.Itoa(folder)
 }
 
 func MkdirWriteFile() {
@@ -40,7 +41,7 @@ func MkdirWriteFile() {
 	}
 }
 
-func MkdirWriteJson() {
+func MkdirWriteJson() string {
 	folder := 1
 	pathFolder := "FileJson/FileWrite/"
 	for i := 1; i < 10; i++ {
@@ -54,9 +55,10 @@ func MkdirWriteJson() {
 			break
 		}
 	}
+	return pathFolder + strconv.Itoa(folder)
 }
 
-func MkdirUploadJson() {
+func MkdirUploadJson() string {
 	folder := 1
 	pathFolder := "FileJson/FileUpload/"
 	for i := 1; i < 10; i++ {
@@ -70,4 +72,5 @@ func MkdirUploadJson() {
 			break
 		}
 	}
+	return pathFolder + strconv.Itoa(folder)
 }
