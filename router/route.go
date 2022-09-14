@@ -15,6 +15,10 @@ func Router() {
 	r.POST("/upload", controllers.PostDockerfile)
 	r.GET("/get/:id", controllers.Find)
 	r.PUT("/update/:id", controllers.Update)
-	r.POST("/delete/:id", controllers.Delete)
+	r.DELETE("/delete/:id", controllers.Delete)
 	r.Run()
 }
+
+// func getJson() {
+// 	c.String(http.StatusOK, string(fileContents))
+// }
