@@ -14,5 +14,7 @@ func Router() {
 	r.GET("/getAll", controllers.FindAll)
 	r.POST("/upload", controllers.PostDockerfile)
 	r.GET("/get/:id", controllers.Find)
+	r.PUT("/update/:id", controllers.Update)
+	r.POST("/delete/:id", controllers.Delete)
 	r.Run()
 }

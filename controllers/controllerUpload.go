@@ -52,3 +52,32 @@ func Find(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": dockerfile})
 }
+
+func Update(c *gin.Context) {
+	db := models.DB
+	// Get model if exist
+	var input models.Dockerfiles
+	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	pathFile := input.Pathfile
+	pathJson := input.PathJson
+	file, _ := c.FormFile("pathfile")
+	input.Pathfile = file.Filename
+	c.SaveUploadedFile(file, pathFile+"/"+file.Filename)
+	trivy.TrivyScan(pathJson, pathFile, input.Pathfile)
+	dockerfile := models.Dockerfiles{
+		Pathfile: pathFile,
+		PathJson: pathJson,
+	}
+	models.DB.Create(&dockerfile)
+	c.JSON(http.StatusOK, gin.H{
+		"data": dockerfile,
+	})
+
+}
+
+func Delete(c *gin.Context) {
+
+}
