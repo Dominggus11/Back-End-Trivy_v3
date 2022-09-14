@@ -108,7 +108,7 @@ func Delete(c *gin.Context) {
 	os.RemoveAll(pathFile)
 	fmt.Print(pathFile)
 	os.RemoveAll(pathJson)
-	//db.Delete(&input)
+	db.Delete(&input)
 
 	c.JSON(http.StatusOK, gin.H{
 		"data": "Deleted",
