@@ -1,7 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"trivy_v3/models"
+
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
-	fmt.Println("Hello World")
+	r := gin.Default()
+	models.ConnectDatabase() // new
+	r.Run()
 }
