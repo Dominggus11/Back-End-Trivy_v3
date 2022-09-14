@@ -1,9 +1,10 @@
 package main
 
 import (
-	"trivy_v3/router"
+	"trivy_v3/trivy"
 )
 
 func main() {
-	router.Router()
+	// router.Router()
+	trivy.MkdirDocker()
 }
