@@ -5,20 +5,17 @@ import (
 	"trivy_v3/models"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 func FindAll(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
-
 	var dockerfiles []models.Dockerfiles
-	db.Find(&dockerfiles)
+	models.DB.Find(&dockerfiles)
 
 	c.JSON(http.StatusOK, gin.H{"data": dockerfiles})
 }
 
 func PostDockerfile(c *gin.Context) {
-	db := c.MustGet("db").(*gorm.DB)
+	//db := c.MustGet("db").(*gorm.DB)
 	var input models.Dockerfiles
 	if err := c.ShouldBind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -32,8 +29,19 @@ func PostDockerfile(c *gin.Context) {
 		Pathfile: input.Pathfile,
 		PathJson: input.PathJson,
 	}
-	db.Create(&dockerfile)
+	models.DB.Create(&dockerfile)
 	c.JSON(http.StatusOK, gin.H{
 		"data": dockerfile,
 	})
+}
+
+func Find(c *gin.Context) {
+	db := models.DB
+	// Get model if exist
+	var dockerfile models.Dockerfiles
+	if err := db.Where("id = ?", c.Param("id")).First(&dockerfile).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": dockerfile})
 }
