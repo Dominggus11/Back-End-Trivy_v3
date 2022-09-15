@@ -15,7 +15,7 @@ func FindProjects(c *gin.Context) {
 }
 
 func PostProject(c *gin.Context) {
-	//db := models.DB
+	db := models.DB
 	var input models.Projects
 	if err := c.ShouldBind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -23,14 +23,18 @@ func PostProject(c *gin.Context) {
 		})
 		return
 	}
-	//create Dockerfile
-	project := models.Projects{
-		ProjectName: input.ProjectName,
+	if err := db.Where("project_name = ?", input.ProjectName).First(&input).Error; err != nil {
+		project := models.Projects{
+			ProjectName: input.ProjectName,
+		}
+		models.DB.Create(&project)
+		c.JSON(http.StatusOK, gin.H{
+			"data": project,
+		})
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Name Sudah Ada"})
+		return
 	}
-	models.DB.Create(&project)
-	c.JSON(http.StatusOK, gin.H{
-		"data": project,
-	})
 }
 
 func FindProject(c *gin.Context) {
@@ -53,14 +57,20 @@ func UpdateProject(c *gin.Context) {
 		return
 	}
 
-	project := models.Projects{
-		ProjectName: input.ProjectName,
+	if err := db.Where("project_name = ?", input.ProjectName).First(&input).Error; err != nil {
+		project := models.Projects{
+			ProjectName: input.ProjectName,
+		}
+		//db.Updates(&dockerfile)
+		db.Model(&input).Updates(project)
+		c.JSON(http.StatusOK, gin.H{
+			"data": project,
+		})
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Name Sudah Ada"})
+		return
 	}
-	//db.Updates(&dockerfile)
-	db.Model(&input).Updates(project)
-	c.JSON(http.StatusOK, gin.H{
-		"data": project,
-	})
+
 }
 
 func DeleteProject(c *gin.Context) {

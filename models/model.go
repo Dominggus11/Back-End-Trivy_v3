@@ -19,7 +19,7 @@ type Dockerfiles struct {
 	Pathfile  string `json:"pathfile"`
 	PathJson  string `json:"pathjson"`
 	ProjectID int
-	Project   Projects `gorm:"foreignKey:ProjectID"`
+	Project   Projects `gorm:"constraint:OnDelete:CASCADE"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

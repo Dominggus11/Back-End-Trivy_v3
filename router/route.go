@@ -13,10 +13,10 @@ func Router() {
 
 	// untuk API Project
 	r.GET("/getProkjects", controllers.FindProjects)
-	r.GET("/getProject", controllers.FindProject)
+	r.GET("/getProject/:id", controllers.FindProject)
 	r.POST("/postProject", controllers.PostProject)
-	r.PUT("/updateProject", controllers.UpdateProject)
-	r.DELETE("/deleteProject", controllers.DeleteProject)
+	r.PUT("/updateProject/:id", controllers.UpdateProject)
+	r.DELETE("/deleteProject/:id", controllers.DeleteProject)
 
 	// untuk API Upload
 	r.GET("/getUploads", controllers.FindDockers)
