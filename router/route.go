@@ -17,5 +17,6 @@ func Router() {
 	r.PUT("/update/:id", controllers.Update)
 	r.DELETE("/delete/:id", controllers.Delete)
 	r.GET("/jsonfile/:id", controllers.GetJson)
+	r.POST("/create", controllers.PostProject)
 	r.Run()
 }

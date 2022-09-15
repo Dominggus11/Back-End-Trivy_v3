@@ -15,7 +15,7 @@ func ConnectDatabase() {
 		panic("Connect")
 	}
 
-	database.AutoMigrate(&Dockerfiles{})
+	database.AutoMigrate(&Dockerfiles{}, &Project{})
 
 	DB = database
 }

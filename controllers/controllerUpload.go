@@ -42,8 +42,9 @@ func PostDockerfile(c *gin.Context) {
 
 	//create Dockerfile
 	dockerfile := models.Dockerfiles{
-		Pathfile: pathFile,
-		PathJson: pathJson,
+		Pathfile:  pathFile,
+		PathJson:  pathJson,
+		ProjectID: input.ProjectID,
 	}
 	models.DB.Create(&dockerfile)
 	c.JSON(http.StatusOK, gin.H{
