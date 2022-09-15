@@ -7,6 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func HelloUser(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"Developer": "Roy Dominggus Andornov Malau",
+		"Project":   "Trivy Misconfiguration",
+	})
+}
+
 func FindProjects(c *gin.Context) {
 	var projects []models.Projects
 	models.DB.Find(&projects)

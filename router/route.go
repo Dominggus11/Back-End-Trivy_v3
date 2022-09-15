@@ -10,9 +10,9 @@ import (
 func Router() {
 	r := gin.Default()
 	models.ConnectDatabase()
-
+	r.GET("/", controllers.HelloUser)
 	// untuk API Project
-	r.GET("/getProkjects", controllers.FindProjects)
+	r.GET("/getProjects", controllers.FindProjects)
 	r.GET("/getProject/:id", controllers.FindProject)
 	r.POST("/postProject", controllers.PostProject)
 	r.PUT("/updateProject/:id", controllers.UpdateProject)
