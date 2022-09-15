@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type Project struct {
+type Projects struct {
 	ID          uint
 	ProjectName string `json:"projectname"`
 	CreatedAt   time.Time
@@ -19,7 +19,7 @@ type Dockerfiles struct {
 	Pathfile  string `json:"pathfile"`
 	PathJson  string `json:"pathjson"`
 	ProjectID int
-	Project   Project `gorm:"foreignKey:ProjectID"`
+	Project   Projects `gorm:"foreignKey:ProjectID"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

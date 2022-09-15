@@ -8,12 +8,15 @@ import (
 )
 
 func FindProjects(c *gin.Context) {
+	var projects []models.Projects
+	models.DB.Find(&projects)
 
+	c.JSON(http.StatusOK, gin.H{"data": projects})
 }
 
 func PostProject(c *gin.Context) {
 	//db := models.DB
-	var input models.Project
+	var input models.Projects
 	if err := c.ShouldBind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -21,7 +24,7 @@ func PostProject(c *gin.Context) {
 		return
 	}
 	//create Dockerfile
-	project := models.Project{
+	project := models.Projects{
 		ProjectName: input.ProjectName,
 	}
 	models.DB.Create(&project)
