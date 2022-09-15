@@ -7,6 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func FindAllProject(c *gin.Context) {
+
+}
+
 func PostProject(c *gin.Context) {
 	//db := models.DB
 	var input models.Project
@@ -24,4 +28,16 @@ func PostProject(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"data": project,
 	})
+}
+
+func FindProject(c *gin.Context) {
+
+}
+
+func UpdateProject(c *gin.Context) {
+
+}
+
+func DeleteProject(c *gin.Context) {
+
 }

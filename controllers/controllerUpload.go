@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func FindAll(c *gin.Context) {
+func FindAllDocker(c *gin.Context) {
 	var dockerfiles []models.Dockerfiles
 	models.DB.Find(&dockerfiles)
 
@@ -52,7 +52,7 @@ func PostDockerfile(c *gin.Context) {
 	})
 }
 
-func Find(c *gin.Context) {
+func FindDocker(c *gin.Context) {
 	db := models.DB
 	// Get model if exist
 	var dockerfile models.Dockerfiles
@@ -63,7 +63,7 @@ func Find(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": dockerfile})
 }
 
-func Update(c *gin.Context) {
+func UpdateDocker(c *gin.Context) {
 	db := models.DB
 	// Get model if exist
 	var input models.Dockerfiles
@@ -96,7 +96,7 @@ func Update(c *gin.Context) {
 
 }
 
-func Delete(c *gin.Context) {
+func DeleteDocker(c *gin.Context) {
 	db := models.DB
 	// Get model if exist
 	var input models.Dockerfiles
