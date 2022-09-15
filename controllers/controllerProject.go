@@ -34,13 +34,45 @@ func PostProject(c *gin.Context) {
 }
 
 func FindProject(c *gin.Context) {
-
+	db := models.DB
+	// Get model if exist
+	var project models.Projects
+	if err := db.Where("id = ?", c.Param("id")).First(&project).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": project})
 }
 
 func UpdateProject(c *gin.Context) {
+	db := models.DB
+	// Get model if exist
+	var input models.Projects
+	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
 
+	project := models.Projects{
+		ProjectName: input.ProjectName,
+	}
+	//db.Updates(&dockerfile)
+	db.Model(&input).Updates(project)
+	c.JSON(http.StatusOK, gin.H{
+		"data": project,
+	})
 }
 
 func DeleteProject(c *gin.Context) {
-
+	db := models.DB
+	// Get model if exist
+	var input models.Projects
+	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	db.Delete(&input)
+	c.JSON(http.StatusOK, gin.H{
+		"data": "Deleted",
+	})
 }
