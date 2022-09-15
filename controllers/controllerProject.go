@@ -84,8 +84,13 @@ func DeleteProject(c *gin.Context) {
 	db := models.DB
 	// Get model if exist
 	var input models.Projects
+	var dockerfile models.Projects
 	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
+		return
+	}
+	if err := db.Where("id = ?", c.Param("id")).First(&dockerfile).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
 	db.Delete(&input)
