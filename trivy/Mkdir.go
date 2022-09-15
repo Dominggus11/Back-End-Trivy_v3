@@ -25,7 +25,7 @@ func MkdirUploadFile() string {
 	return pathFolder + strconv.Itoa(folder)
 }
 
-func MkdirWriteFile() {
+func MkdirWriteFile() string {
 	folder := 1
 	pathFolder := "FileDocker/FileWrite/"
 	for i := 1; i < 10; i++ {
@@ -39,6 +39,7 @@ func MkdirWriteFile() {
 			break
 		}
 	}
+	return pathFolder + strconv.Itoa(folder)
 }
 
 func MkdirWriteJson() string {
