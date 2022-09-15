@@ -49,7 +49,7 @@ func FindProject(c *gin.Context) {
 	// Get model if exist
 	var project models.Projects
 	if err := db.Where("id = ?", c.Param("id")).First(&project).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": project})
@@ -60,7 +60,7 @@ func UpdateProject(c *gin.Context) {
 	// Get model if exist
 	var input models.Projects
 	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
 		return
 	}
 
@@ -85,7 +85,7 @@ func DeleteProject(c *gin.Context) {
 	// Get model if exist
 	var input models.Projects
 	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
 		return
 	}
 	db.Delete(&input)
