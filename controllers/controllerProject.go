@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func FindAllProject(c *gin.Context) {
+func FindProjects(c *gin.Context) {
 
 }
 

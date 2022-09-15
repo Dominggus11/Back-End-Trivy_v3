@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func FindAllDocker(c *gin.Context) {
+func FindDockers(c *gin.Context) {
 	var dockerfiles []models.Dockerfiles
 	models.DB.Find(&dockerfiles)
 

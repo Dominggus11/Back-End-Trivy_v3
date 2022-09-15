@@ -11,14 +11,14 @@ func Router() {
 	r := gin.Default()
 	models.ConnectDatabase()
 	// untuk API Upload
-	r.GET("/getUploads", controllers.FindAllDocker)
+	r.GET("/getUploads", controllers.FindDockers)
 	r.POST("/postUpload", controllers.PostDockerfile)
 	r.GET("/getUpload/:id", controllers.FindDocker)
 	r.PUT("/updateUpload/:id", controllers.UpdateDocker)
 	r.DELETE("/deleteUpload/:id", controllers.DeleteDocker)
 
 	// untuk API Project
-	r.GET("/getProkjects", controllers.FindAllProject)
+	r.GET("/getProkjects", controllers.FindProjects)
 	r.GET("/getProject", controllers.FindProject)
 	r.POST("/postProject", controllers.PostProject)
 	r.PUT("/updateProject", controllers.UpdateProject)
