@@ -9,14 +9,10 @@ import (
 )
 
 func FindCodes(c *gin.Context) {
-	db := models.DB
 	// Get model if exist
-	var dockerfile models.Dockerfiles
-	if err := db.Where("id = ?", c.Param("id")).First(&dockerfile).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"data": dockerfile})
+	var dockerfiles []models.Dockerfiles
+	models.DB.Find(&dockerfiles)
+	c.JSON(http.StatusOK, gin.H{"data": dockerfiles})
 }
 
 func FindCode(c *gin.Context) {
