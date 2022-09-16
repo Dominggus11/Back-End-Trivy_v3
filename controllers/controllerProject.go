@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"os"
 	"trivy_v3/models"
 
 	"github.com/gin-gonic/gin"
@@ -84,16 +85,27 @@ func DeleteProject(c *gin.Context) {
 	db := models.DB
 	// Get model if exist
 	var input models.Projects
-	var dockerfile models.Projects
 	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
 		return
 	}
-	if err := db.Where("id = ?", c.Param("id")).First(&dockerfile).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+
+	var dockerfile []models.Dockerfiles
+	err := db.Where("project_id = ?", c.Param("id")).Find(&dockerfile).Error
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
 		return
 	}
-	db.Delete(&input)
+
+	for _, d := range dockerfile {
+		pathFile := d.Pathfile
+		pathJson := d.PathJson
+		os.RemoveAll(pathFile)
+		os.RemoveAll(pathJson)
+		db.Delete(&d)
+	}
+
+	//db.Delete(&input)
 	c.JSON(http.StatusOK, gin.H{
 		"data": "Deleted",
 	})
