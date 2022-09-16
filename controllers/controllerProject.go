@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"trivy_v3/models"
@@ -72,7 +71,6 @@ func UpdateProject(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia !"})
 		return
 	}
-
 	newName := temp.ProjectName
 	err := db.Where("project_name = ?", newName).First(&input).Error
 	if err != nil {
@@ -81,11 +79,12 @@ func UpdateProject(c *gin.Context) {
 		}
 		db.Model(&input).Updates(project)
 		c.JSON(http.StatusOK, gin.H{
-			"data": project,
+			"data": input,
 		})
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Name Sudah Ada !!!"})
+		return
 	}
-	fmt.Println(newName)
-	c.JSON(http.StatusBadRequest, gin.H{"error": "Project Name Sudah Ada !!!"})
 
 }
 
