@@ -31,7 +31,7 @@ func PostProject(c *gin.Context) {
 		})
 		return
 	}
-	if err := db.Where("project_name = ?", input.ProjectName).First(&input).Error; err != nil {
+	if err := db.Where("project_name = ?", input.ProjectName).First(&input).Error; err == nil {
 		project := models.Projects{
 			ProjectName: input.ProjectName,
 		}
