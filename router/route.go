@@ -26,7 +26,7 @@ func Router() {
 	r.DELETE("/deleteUpload/:id", controllers.DeleteDocker)
 
 	// untuk API Code
-	r.GET("/getCodes", controllers.FindCodes)
+	// r.GET("/getCodes", controllers.FindCodes)
 	r.POST("/postCode", controllers.PostCode)
 	r.GET("/getCode/:id", controllers.FindCode)
 	r.PUT("/updateCode/:id", controllers.UpdateCode)

@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func FindCodes(c *gin.Context) {
-	// Get model if exist
-	var dockerfiles []models.Dockerfiles
-	models.DB.Find(&dockerfiles)
-	c.JSON(http.StatusOK, gin.H{"data": dockerfiles})
-}
+// func FindCodes(c *gin.Context) {
+// 	// Get model if exist
+// 	var dockerfiles []models.Dockerfiles
+// 	models.DB.Find(&dockerfiles)
+// 	c.JSON(http.StatusOK, gin.H{"data": dockerfiles})
+// }
 
 func FindCode(c *gin.Context) {
 
