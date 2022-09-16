@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -46,7 +45,7 @@ func PostDockerfile(c *gin.Context) {
 
 	var project models.Projects
 	if err := db.Where("id = ?", input.ProjectID).First(&project).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia !!!"})
 		return
 	}
 
@@ -94,13 +93,14 @@ func UpdateDocker(c *gin.Context) {
 	c.SaveUploadedFile(file, pathFile+"/"+file.Filename)
 	trivy.TrivyScan(pathJson, pathFile, filename)
 	dockerfile := models.Dockerfiles{
-		Pathfile: pathFile,
-		PathJson: pathJson,
+		Pathfile:  pathFile,
+		PathJson:  pathJson,
+		ProjectID: input.ProjectID,
 	}
 	//db.Updates(&dockerfile)
 	db.Model(&input).Updates(dockerfile)
 	c.JSON(http.StatusOK, gin.H{
-		"data": dockerfile,
+		"data": input,
 	})
 
 }
@@ -117,7 +117,6 @@ func DeleteDocker(c *gin.Context) {
 	pathJson := input.PathJson
 
 	os.RemoveAll(pathFile)
-	fmt.Print(pathFile)
 	os.RemoveAll(pathJson)
 	db.Delete(&input)
 

@@ -109,7 +109,6 @@ func DeleteProject(c *gin.Context) {
 		pathJson := d.PathJson
 		os.RemoveAll(pathFile)
 		os.RemoveAll(pathJson)
-		db.Delete(&d)
 	}
 
 	db.Delete(&input)
