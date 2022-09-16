@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"trivy_v3/models"
@@ -51,7 +52,7 @@ func FindProject(c *gin.Context) {
 	// Get model if exist
 	var project models.Projects
 	if err := db.Where("id = ?", c.Param("id")).First(&project).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia !!!"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": project})
@@ -60,25 +61,31 @@ func FindProject(c *gin.Context) {
 func UpdateProject(c *gin.Context) {
 	db := models.DB
 	// Get model if exist
-	var input models.Projects
+	var input, temp models.Projects
+	if err := c.ShouldBind(&temp); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
 	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia !"})
 		return
 	}
 
-	if err := db.Where("project_name = ?", input.ProjectName).First(&input).Error; err != nil {
+	newName := temp.ProjectName
+	err := db.Where("project_name = ?", newName).First(&input).Error
+	if err != nil {
 		project := models.Projects{
-			ProjectName: input.ProjectName,
+			ProjectName: temp.ProjectName,
 		}
-		//db.Updates(&dockerfile)
 		db.Model(&input).Updates(project)
 		c.JSON(http.StatusOK, gin.H{
 			"data": project,
 		})
-	} else {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Name Sudah Ada"})
-		return
 	}
+	fmt.Println(newName)
+	c.JSON(http.StatusBadRequest, gin.H{"error": "Project Name Sudah Ada !!!"})
 
 }
 
@@ -87,14 +94,14 @@ func DeleteProject(c *gin.Context) {
 	// Get model if exist
 	var input models.Projects
 	if err := db.Where("id = ?", c.Param("id")).First(&input).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia !"})
 		return
 	}
 
 	var dockerfile []models.Dockerfiles
 	err := db.Where("project_id = ?", c.Param("id")).Find(&dockerfile).Error
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia !"})
 		return
 	}
 
@@ -108,6 +115,6 @@ func DeleteProject(c *gin.Context) {
 
 	db.Delete(&input)
 	c.JSON(http.StatusOK, gin.H{
-		"data": "Deleted",
+		"data": "Data Berhasil Di Delete !!!",
 	})
 }
