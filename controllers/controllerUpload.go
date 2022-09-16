@@ -19,7 +19,7 @@ func FindDockers(c *gin.Context) {
 }
 
 func PostDockerfile(c *gin.Context) {
-	//db := models.DB
+	db := models.DB
 	var input models.Dockerfiles
 	if err := c.ShouldBind(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -36,9 +36,6 @@ func PostDockerfile(c *gin.Context) {
 		})
 		return
 	}
-	input.Pathfile = file.Filename
-	c.SaveUploadedFile(file, pathFile+"/"+file.Filename)
-	trivy.TrivyScan(pathJson, pathFile, input.Pathfile)
 
 	//create Dockerfile
 	dockerfile := models.Dockerfiles{
@@ -46,7 +43,19 @@ func PostDockerfile(c *gin.Context) {
 		PathJson:  pathJson,
 		ProjectID: input.ProjectID,
 	}
+
+	var project models.Projects
+	if err := db.Where("id = ?", input.ProjectID).First(&project).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Tidak Tersedia Bos Q"})
+		return
+	}
+
+	input.Pathfile = file.Filename
+	c.SaveUploadedFile(file, pathFile+"/"+file.Filename)
+	trivy.TrivyScan(pathJson, pathFile, input.Pathfile)
+
 	models.DB.Create(&dockerfile)
+
 	c.JSON(http.StatusOK, gin.H{
 		"data": dockerfile,
 	})
