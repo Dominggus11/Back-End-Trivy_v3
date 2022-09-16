@@ -31,18 +31,19 @@ func PostProject(c *gin.Context) {
 		})
 		return
 	}
-	if err := db.Where("project_name = ?", input.ProjectName).First(&input).Error; err == nil {
+	if err := db.Where("project_name = ?", input.ProjectName).First(&input).Error; err != nil {
 		project := models.Projects{
 			ProjectName: input.ProjectName,
 		}
-		models.DB.Create(&project)
+		db.Create(&project)
 		c.JSON(http.StatusOK, gin.H{
-			"data": project,
-		})
+			"data": project})
+		return
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Project Name Sudah Ada"})
 		return
 	}
+
 }
 
 func FindProject(c *gin.Context) {
