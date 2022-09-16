@@ -105,7 +105,7 @@ func DeleteProject(c *gin.Context) {
 		db.Delete(&d)
 	}
 
-	//db.Delete(&input)
+	db.Delete(&input)
 	c.JSON(http.StatusOK, gin.H{
 		"data": "Deleted",
 	})
