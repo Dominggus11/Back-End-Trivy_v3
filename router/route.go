@@ -36,7 +36,7 @@ func Router() {
 	// untuk API return JSON
 	r.GET("/jsonfile/:id", controllers.GetJson)
 
-	r.Run(":8081")
+	r.Run()
 }
 
 func CORS(c *gin.Context) {
