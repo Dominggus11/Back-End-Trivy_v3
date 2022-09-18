@@ -8,7 +8,7 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() {
-	dsn := "host=localhost user=rdam password=programming dbname=trivy port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	dsn := "host=192.168.1.107 user=rdam password=programming dbname=trivy port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
