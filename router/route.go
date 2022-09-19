@@ -13,25 +13,25 @@ func Router() {
 	models.ConnectDatabase()
 	r.GET("/", controllers.HelloUser)
 	// untuk API Project
-	r.GET("/getProjects", controllers.FindProjects)
-	r.GET("/getProject/:id", controllers.FindProject)
-	r.POST("/postProject", controllers.PostProject)
-	r.PUT("/updateProject/:id", controllers.UpdateProject)
-	r.DELETE("/deleteProject/:id", controllers.DeleteProject)
+	r.GET("/Projects", controllers.FindProjects)
+	r.GET("/Project/:id", controllers.FindProject)
+	r.POST("/Project", controllers.PostProject)
+	r.PUT("/Project/:id", controllers.UpdateProject)
+	r.DELETE("/Project/:id", controllers.DeleteProject)
 
 	// untuk API Upload
-	r.GET("/getUploads", controllers.FindDockers)
-	r.POST("/postUpload", controllers.PostDockerfile)
-	r.GET("/getUpload/:id", controllers.FindDocker)
-	r.PUT("/updateUpload/:id", controllers.UpdateDocker)
-	r.DELETE("/deleteUpload/:id", controllers.DeleteDocker)
+	r.GET("/Uploads", controllers.FindDockers)
+	r.POST("/Upload", controllers.PostDockerfile)
+	r.GET("/Upload/:id", controllers.FindDocker)
+	r.PUT("/Upload/:id", controllers.UpdateDocker)
+	r.DELETE("/Upload/:id", controllers.DeleteDocker)
 
 	// untuk API Code
 	// r.GET("/getCodes", controllers.FindCodes)
-	r.POST("/postCode", controllers.PostCode)
-	r.GET("/getCode/:id", controllers.FindCode)
-	r.PUT("/updateCode/:id", controllers.UpdateCode)
-	r.DELETE("/deleteCode/:id", controllers.DeleteCode)
+	r.POST("/Code", controllers.PostCode)
+	r.GET("/Code/:id", controllers.FindCode)
+	r.PUT("/Code/:id", controllers.UpdateCode)
+	r.DELETE("/Code/:id", controllers.DeleteCode)
 
 	// untuk API return JSON
 	r.GET("/jsonfile/:id", controllers.GetJson)
